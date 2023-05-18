@@ -63,7 +63,7 @@ void interactive(void)
 		}
 		else if (child == 0)
 		{
-			execve(argv[0], argv, NULL);
+			execve(argv[0], argv, environ);
 			perror("./shell");
 			free(line);
 			exit(EXIT_FAILURE);
@@ -102,7 +102,7 @@ void non_interactive(void)
 		}
 		else if (child == 0)
 		{
-			execve(argv[0], argv, NULL);
+			execve(argv[0], argv, environ);
 			perror("./shell");
 			free(line);
 			exit(EXIT_FAILURE);
