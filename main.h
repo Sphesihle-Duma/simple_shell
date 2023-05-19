@@ -14,5 +14,6 @@ char *_strdup(char *s);
 int _strlen(char *s);
 int _putchar(char c);
 char *_strcat(char *dest, char *src);
+char *read_input(char *command, size_t buff);
 #endif
 

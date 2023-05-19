@@ -1,46 +1,41 @@
 #include "main.h"
 /**
-  * prompt - prints prompts
-  */
+ * prompt - prints prompt
+ */
 void prompt(void)
 {
 	_putchar('$');
-	_putchar(32);
+	_putchar(' ');
 	fflush(stdout);
 }
-/**
-  * read_input - read a command
-  * @buff: buffer size
-  * @command: command
-  * Return: pointer to the command
-  */
-char *read_input(char *command, size_t buff)
-{
-	if (getline(&command, &buff, stdin) == -1)
-	{
-		if (feof(stdin))
-		{
-			_putchar('\n');
-			free(command);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			perror("./shell");
-			free(command);
-			exit(EXIT_FAILURE);
-		}
 
-	}
-	return (command);
-}
 /**
-  * interactive - interactive mode
-  */
+ * parse_arguments - parse command line into arguments
+ * @line: input command line
+ * @argv: array to store arguments
+ * Return: nothing
+ */
+void parse_arguments(char *line, char *argv[])
+{
+	char *token;
+	int argc = 0;
+
+	token = strtok(line, " \t\n");
+	while (token != NULL)
+	{
+		argv[argc++] = token;
+		token = strtok(NULL, " \t\n");
+	}
+	argv[argc] = NULL;
+}
+
+/**
+ * interactive - interactive mode
+ */
 void interactive(void)
 {
 	char *line = NULL;
-	char *argv[2];
+	char *argv[128];
 	size_t buffersize = 0;
 	int status;
 	pid_t child;
@@ -51,9 +46,10 @@ void interactive(void)
 		line = read_input(line, buffersize);
 		if (line == NULL || *line == '\n')
 			continue;
-		line[_strlen(line) - 1] = '\0';
-		argv[0] = line;
-		argv[1] = NULL;
+
+		line[strlen(line) - 1] = '\0';
+		parse_arguments(line, argv);
+
 		child = fork();
 		if (child == -1)
 		{
@@ -76,23 +72,23 @@ void interactive(void)
 	}
 	free(line);
 }
+
 /**
-  * non_interactive - noninteractive mode
-  */
+ * non_interactive - noninteractive mode
+ */
 void non_interactive(void)
 {
-
 	char *line = NULL;
-	char *argv[2];
+	char *argv[128];
 	size_t buffersize = 0;
 	int status;
 	pid_t child;
 
 	while (getline(&line, &buffersize, stdin) != -1)
 	{
-		line[_strlen(line) - 1] = '\0';
-		argv[0] = line;
-		argv[1] = NULL;
+		line[strlen(line) - 1] = '\0';
+		parse_arguments(line, argv);
+
 		child = fork();
 		if (child == -1)
 		{
@@ -109,16 +105,18 @@ void non_interactive(void)
 		}
 		else
 			wait(&status);
+
 		free(line);
 		line = NULL;
 		buffersize = 0;
 	}
 	free(line);
 }
+
 /**
-  * main - main method
-  * Return: 0 on Success
-  */
+ * main - main method
+ * Return: 0 on Success
+ */
 int main(void)
 {
 	if (isatty(STDIN_FILENO))
