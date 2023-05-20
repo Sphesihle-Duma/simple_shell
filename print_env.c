@@ -1,6 +1,10 @@
 #include "main.h"
 
-
+/**
+ * print_currentenv - prints the current environment.
+ *
+ * Return: Nothing
+ */
 
 void print_currentenv()
 {
