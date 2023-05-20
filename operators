@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Execute the commands 'ls' and 'pwd' and 
+ls && pwd
+
+# Check if the command "ls" exists
+if command -v ls >/dev/null 2>&1
+then
+        echo "executed successfully"
+else
+        echo "Command not found"
+fi
