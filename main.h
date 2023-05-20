@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <signal.h>
 extern char **environ;
+void print_currentenv();
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *s);
 int _strlen(char *s);
