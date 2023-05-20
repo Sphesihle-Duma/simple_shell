@@ -1,15 +1,5 @@
 #include "main.h"
 /**
- * prompt - prints prompt
- */
-void prompt(void)
-{
-	_putchar('$');
-	_putchar(' ');
-	fflush(stdout);
-}
-
-/**
  * parse_arguments - parse command line into arguments
  * @line: input command line
  * @argv: array to store arguments
@@ -37,8 +27,6 @@ void interactive(void)
 	char *line = NULL;
 	char *argv[128];
 	size_t buffersize = 0;
-	int status;
-	pid_t child;
 
 	while (1)
 	{
@@ -46,26 +34,14 @@ void interactive(void)
 		line = read_input(line, buffersize);
 		if (line == NULL || *line == '\n')
 			continue;
-
-		line[strlen(line) - 1] = '\0';
+		line[_strlen(line) - 1] = '\0';
 		parse_arguments(line, argv);
-
-		child = fork();
-		if (child == -1)
+		if (_strchr(argv[0], '/') != NULL)
 		{
-			perror("fork");
-			free(line);
-			exit(EXIT_FAILURE);
-		}
-		else if (child == 0)
-		{
-			execve(argv[0], argv, environ);
-			perror("./shell");
-			free(line);
-			exit(EXIT_FAILURE);
+			execute_command(argv[0], argv, environ);
 		}
 		else
-			wait(&status);
+			search_and_execute(argv[0], getenv("PATH"), argv);
 		free(line);
 		line = NULL;
 		buffersize = 0;
@@ -81,30 +57,15 @@ void non_interactive(void)
 	char *line = NULL;
 	char *argv[128];
 	size_t buffersize = 0;
-	int status;
-	pid_t child;
 
 	while (getline(&line, &buffersize, stdin) != -1)
 	{
-		line[strlen(line) - 1] = '\0';
+		line[_strlen(line) - 1] = '\0';
 		parse_arguments(line, argv);
-
-		child = fork();
-		if (child == -1)
-		{
-			perror("fork");
-			free(line);
-			exit(EXIT_FAILURE);
-		}
-		else if (child == 0)
-		{
-			execve(argv[0], argv, environ);
-			perror("./shell");
-			free(line);
-			exit(EXIT_FAILURE);
-		}
+		if (_strchr(argv[0], '/') != NULL)
+			execute_command(argv[0], argv, environ);
 		else
-			wait(&status);
+			search_and_execute(argv[0], getenv("PATH"), argv);
 
 		free(line);
 		line = NULL;
