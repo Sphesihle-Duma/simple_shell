@@ -9,6 +9,7 @@ void parse_arguments(char *line, char *argv[])
 {
 	char *token;
 	int argc = 0;
+	char **env = environ;
 
 	token = strtok(line, " \t\n");
 	while (token != NULL)
@@ -19,6 +20,14 @@ void parse_arguments(char *line, char *argv[])
 	argv[argc] = NULL;
 	if (argc > 0 && _strcmp(argv[0], "exit") == 0)
 		exit(0);
+	else if (argc > 0 && _strcmp(argv[0], "env") == 0)
+	{
+		while (*env != NULL)
+		{
+			printf("%s\n", *env);
+			env++;
+		}
+	}
 }
 
 /**
