@@ -20,5 +20,6 @@ void prompt(void);
 void search_and_execute(char *command, char *path, char *argv[]);
 void execute_command(char *command, char *argv[], char *envp[]);
 int _strcmp(char *s1, char *s2);
+void printString(char *str);
 #endif
 

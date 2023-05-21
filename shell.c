@@ -24,7 +24,7 @@ void parse_arguments(char *line, char *argv[])
 	{
 		while (*env != NULL)
 		{
-			printf("%s\n", *env);
+			printString(*env);
 			env++;
 		}
 	}
