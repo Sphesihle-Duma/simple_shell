@@ -21,7 +21,7 @@ void execute_command(char *command, char *argv[], char *envp[])
 		else if (child == 0)
 		{
 			execve(command, argv, envp);
-			perror("./shell");
+			perror("./hsh");
 			exit(EXIT_FAILURE);
 		}
 		else
@@ -29,6 +29,6 @@ void execute_command(char *command, char *argv[], char *envp[])
 	}
 	else
 	{
-		perror("./shell");
+		perror("./hsh");
 	}
 }

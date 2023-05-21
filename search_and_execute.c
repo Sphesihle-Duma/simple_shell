@@ -10,6 +10,7 @@ void search_and_execute(char *command, char *path, char *argv[])
 	char *dir_token;
 	char full_path[128];
 	char *dir_temp = _strdup(path);
+	char **env = environ;
 
 	if (dir_temp == NULL)
 	{
@@ -23,12 +24,20 @@ void search_and_execute(char *command, char *path, char *argv[])
 		_strcat(full_path, "/");
 		_strcat(full_path, command);
 		argv[0] = full_path;
-		if (access(argv[0], X_OK) == 0)
+		if (_strcmp(command, "env") == 0)
 		{
+			while (*env != NULL)
+			{
+				printString(*env);
+				env++;
+			}
 			break;
 		}
+		if (access(argv[0], X_OK) == 0)
+			break;
 		dir_token = strtok(NULL, ":");
 	}
 	free(dir_temp);
-	execute_command(argv[0], argv, environ);
+	if (_strcmp(command, "env") != 0)
+		execute_command(argv[0], argv, environ);
 }
