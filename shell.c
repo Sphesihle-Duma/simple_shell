@@ -17,6 +17,8 @@ void parse_arguments(char *line, char *argv[])
 		token = strtok(NULL, " \t\n");
 	}
 	argv[argc] = NULL;
+	if (argc > 0 && _strcmp(argv[0], "exit") == 0)
+		exit(0);
 }
 
 /**

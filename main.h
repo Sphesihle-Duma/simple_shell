@@ -9,7 +9,6 @@
 #include <errno.h>
 #include <signal.h>
 extern char **environ;
-void print_currentenv();
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *s);
 int _strlen(char *s);
@@ -20,5 +19,6 @@ char *read_input(char *command, size_t buff);
 void prompt(void);
 void search_and_execute(char *command, char *path, char *argv[]);
 void execute_command(char *command, char *argv[], char *envp[]);
+int _strcmp(char *s1, char *s2);
 #endif
 
