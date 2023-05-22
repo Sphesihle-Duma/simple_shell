@@ -22,5 +22,8 @@ void execute_command(char *command, char *argv[], char *envp[]);
 int _strcmp(char *s1, char *s2);
 void printString(char *str);
 int _atoi(char *s);
+int set_environment_variable(const char *name, const char *value);
+void handle_builtin_commands(int argc, char *argv[]);
+int unset_environment_variable(const char *name);
 #endif
 
