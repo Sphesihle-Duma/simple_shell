@@ -20,7 +20,6 @@ void parse_arguments(char *line, char *argv[])
 	argv[argc] = NULL;
 	if (argc > 0 && _strcmp(argv[0], "exit") == 0)
 	{
-	
 		if (argc > 1)
 		{
 			status = _atoi(argv[1]);
