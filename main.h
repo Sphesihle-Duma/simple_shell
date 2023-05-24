@@ -25,6 +25,5 @@ int _atoi(char *s);
 int set_environment_variable(const char *name, const char *value);
 void handle_builtin_commands(int argc, char *argv[]);
 int unset_environment_variable(const char *name);
-void handl_operators(void);
 #endif
 
