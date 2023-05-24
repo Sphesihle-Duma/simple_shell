@@ -23,6 +23,8 @@ void parse_arguments(char *line, char *argv[])
 		if (argc > 1)
 		{
 			status = _atoi(argv[1]);
+			if (status < 0 || status > 255)
+				perror(argv[1]);
 			free(line);
 			exit(status);
 		}
