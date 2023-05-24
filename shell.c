@@ -31,7 +31,7 @@ void parse_arguments(char *line, char *argv[])
 		else
 		{
 			free(line);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 	}
 }

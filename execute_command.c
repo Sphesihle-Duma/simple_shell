@@ -9,7 +9,6 @@ void execute_command(char *command, char *argv[], char *envp[])
 {
 	pid_t child;
 	int status;
-	char error_msg[100];
 
 	if (access(command, X_OK) == 0)
 	{
@@ -29,11 +28,5 @@ void execute_command(char *command, char *argv[], char *envp[])
 			wait(&status);
 	}
 	else
-	{
-		strcpy(error_msg, command);
-		strcat(error_msg, ": ");
-		strcat(error_msg, "1: ");
-		strcat(error_msg, "Not found");
-		printString(error_msg);
-	}
+		perror("./hsh");
 }
